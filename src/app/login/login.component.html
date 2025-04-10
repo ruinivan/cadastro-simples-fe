@@ -1,0 +1,58 @@
+<main>
+  
+  <h1>Login</h1>
+
+  <div id="div-login">
+
+    <div class="preencher">
+
+      <label for=""><p>Email</p></label>
+
+      <input type="text" />
+
+    </div>
+
+    <div class="preencher">
+
+      <label for=""><p>Senha</p></label>
+
+      <input type="text" />
+
+    </div>
+
+  </div>
+
+  <button>Login</button>
+
+  <p>Não tem conta ainda? <span>CADASTRA-SE</span></p>
+
+  <form [formGroup]="form">
+  <input formControlName="email" />
+
+  <span *ngIf="form.get('email')?.touched && form.get('email')?.errors?.['email']">
+    Passe um email válido
+  </span>
+
+  <span *ngIf="form.get('email')?.touched && form.get('email')?.errors?.['required']">
+    O campo é obrigatório
+  </span>
+
+  <input formControlName="age" />
+
+  <span *ngIf="form.get('age')?.touched && form.get('age')?.errors?.['min']">
+    Passe uma idade maior que 18 anos
+  </span>
+
+  <input formControlName="cpf" />
+
+
+  <span *ngIf="form.get('cpf')?.touched && form.get('cpf')?.errors?.['cpf']">
+    Passe um cpf valido
+  </span>
+
+  <button [disabled]="!form.valid">Salvar</button>
+
+</form>
+
+</main>
+
