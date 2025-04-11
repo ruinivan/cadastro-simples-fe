@@ -1,58 +1,54 @@
 <main>
-  
   <h1>Login</h1>
 
   <div id="div-login">
+    <form [formGroup]="form">
+      <div class="preencher">
+        <label><p>Email</p></label>
 
-    <div class="preencher">
+        <input
+          placeholder="exemplo@gmail.com"
+          formControlName="email"
+          name="email"
+        />
 
-      <label for=""><p>Email</p></label>
+        <span
+          *ngIf="form.get('email')?.touched && form.get('email')?.errors?.['email']"
+        >
+          Passe um email válido
+        </span>
 
-      <input type="text" />
+        <span
+          *ngIf="form.get('email')?.touched && form.get('email')?.errors?.['required']"
+        >
+          Campo obrigatório
+        </span>
+      </div>
 
-    </div>
+      <div class="preencher">
+        <label><p>Senha</p></label>
+        <div id="senha_login">
+          <input
+            placeholder="senha"
+            name="senha"
+            formControlName="senha"
+            [type]="showPassword ? 'text' : 'password'"
+          />
 
-    <div class="preencher">
-
-      <label for=""><p>Senha</p></label>
-
-      <input type="text" />
-
-    </div>
-
+          <button id="visual_senha" (click)="changeShowPasswordStatus()">
+            <span>{{ showPassword ? "O" : "O" }}</span>
+          </button>
+        </div>
+        <span
+          *ngIf="form.get('senha')?.touched && form.get('senha')?.errors?.['required']"
+        >
+          Campo obrigatório
+        </span>
+      </div>
+    </form>
+    <button id="login_button" [disabled]="!form.valid" (click)="enviarLogin()">
+      Login
+    </button>
+    <button (click)="cadastroPage()">Não tem conta? Clique aqui</button>
   </div>
-
-  <button>Login</button>
-
-  <p>Não tem conta ainda? <span>CADASTRA-SE</span></p>
-
-  <form [formGroup]="form">
-  <input formControlName="email" />
-
-  <span *ngIf="form.get('email')?.touched && form.get('email')?.errors?.['email']">
-    Passe um email válido
-  </span>
-
-  <span *ngIf="form.get('email')?.touched && form.get('email')?.errors?.['required']">
-    O campo é obrigatório
-  </span>
-
-  <input formControlName="age" />
-
-  <span *ngIf="form.get('age')?.touched && form.get('age')?.errors?.['min']">
-    Passe uma idade maior que 18 anos
-  </span>
-
-  <input formControlName="cpf" />
-
-
-  <span *ngIf="form.get('cpf')?.touched && form.get('cpf')?.errors?.['cpf']">
-    Passe um cpf valido
-  </span>
-
-  <button [disabled]="!form.valid">Salvar</button>
-
-</form>
-
 </main>
-

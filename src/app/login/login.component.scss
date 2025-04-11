@@ -5,7 +5,7 @@ main{
   height: 80vh;
 
   h1{
-    padding-bottom: 0vh;
+    padding-bottom: 5vh;
     display: block;
     color: blue;
     text-align: center;
@@ -13,27 +13,28 @@ main{
     font-size: 14vh;
   }
 
+  #div-login{
+    margin: auto;
+    width: 36vw;
+
+  }
+
+  .preencher{
+    width: 22vw;
+    margin: auto;
+    padding-bottom: 1.5vh;
+  }
+
   label{
     margin-right: 5vw;
   }
 
   input{
-    width: 20vw;
+    width: 18vw;
     border-width: 2px;
     border-radius: 10px;
-    margin: auto;
-  }
-
-  #div-login{
-    margin: auto;
-    width: 35vw;
-
-  }
-
-  .preencher{
-    width: 20vw;
-    margin: auto;
-    padding-bottom: 1vh;
+    margin-right: 10px;
+    display: flex;
   }
 
   label{
@@ -43,9 +44,32 @@ main{
     }
   }
 
-  button{
+  #senha_login{
+    display: flex;
+  }
+
+  #visual_senha{
+    display: flex;
+    border-width: 2px;
+    border-radius: 15px;
+    width: 25px;
+    height: 25px;
+    padding: 0px 0px 0px 0px;
+    place-content: center;
+    margin-top: 3.5px;
+
+    span{
+      font-size: 15px;
+      font-weight: 500;
+    }
+  }
+
+  #login_button{
     border-radius: 5px;
-    width: 5vw;
+    width: 10vw;
+    height: 5vh;
+    margin-left: 12.5vw;
+    margin-top: 5vh;
   }
 }
 
