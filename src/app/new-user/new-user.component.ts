@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { NewUser } from '../shared/interfaces/user.interface';
 import { NewUserService } from '../shared/services/newUser.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-user',
@@ -18,14 +19,18 @@ import { NewUserService } from '../shared/services/newUser.service';
   styleUrl: './new-user.component.scss',
 })
 export class NewUserComponent {
-  constructor(private fb: FormBuilder, private newUserService: NewUserService ) {}
+  constructor(
+    private fb: FormBuilder,
+    private newUserService: NewUserService,
+    private router: Router
+  ) {}
 
   formNewUser: FormGroup<any> = this.fb.group({
     name: ['', Validators.required],
     email: ['', Validators.required],
     password: ['', Validators.required],
-    birthDay: ['', Validators.required],
-    telephone: [''],
+    birthDay: [],
+    telephone: [],
   });
 
   newUser() {
@@ -37,5 +42,6 @@ export class NewUserComponent {
       telephone: this.formNewUser.get('telephone')?.value,
     };
     this.newUserService.newUser(body);
+    this.router.navigate(['']);
   }
 }

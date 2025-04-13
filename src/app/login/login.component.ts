@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service';
+import { AccessService } from '../shared/services/access.service';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,8 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private accessService: AccessService
   ) {}
 
   form: FormGroup<any> = this.fb.group({
@@ -42,12 +44,10 @@ export class LoginComponent {
     };
     try {
       const response: any = await this.authService.login(body);
-
-      console.log(response);
-
       // if(!response.status) {
       //   alert(response.status)
       // }
+      this.accessService.allowAccess();
       this.router.navigate(['/show-users']);
     } catch (error) {
       console.log(error);

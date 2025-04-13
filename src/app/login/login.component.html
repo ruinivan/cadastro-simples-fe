@@ -7,7 +7,7 @@
         <label><p>Email</p></label>
 
         <input
-          placeholder="exemplo@gmail.com"
+          placeholder="exemple@gmail.com"
           formControlName="email"
           name="email"
         />
@@ -15,23 +15,20 @@
         <span
           *ngIf="form.get('email')?.touched && form.get('email')?.errors?.['email']"
         >
-          Passe um email válido
+          Invalid email format
         </span>
 
         <span
           *ngIf="form.get('email')?.touched && form.get('email')?.errors?.['required']"
         >
-          Campo obrigatório
+          Required field
         </span>
-
       </div>
 
       <div class="fillIn">
-
-        <label><p>password</p></label>
+        <label><p>Password</p></label>
 
         <div id="password_login">
-
           <input
             placeholder="password"
             name="password"
@@ -42,28 +39,28 @@
           <button id="visual_password" (click)="changeShowPasswordStatus()">
             <span>{{ showPassword ? "O" : "O" }}</span>
           </button>
-
         </div>
 
         <span
           *ngIf="form.get('password')?.touched && form.get('password')?.errors?.['required']"
         >
-          Campo obrigatório
+          Required field
         </span>
-
       </div>
-
     </form>
 
-    <button id="login_button" [disabled]="!form.valid" (click)="sendLogin()">
+    <button
+      [ngStyle]="{ 'background-color': form.valid ? '#0000ff' : '#add8e6' }"
+      id="login_button"
+      [disabled]="!form.valid"
+      (click)="sendLogin()"
+    >
       Login
     </button>
 
     <div id="newUser">
-
-    <p class="newUser">Não tem conta?</p><a id="changePage" (click)="newUserPage()">Cadastra-se</a>
-
+      <p class="newUser">Don`t have a account?</p>
+      <a id="changePage" (click)="newUserPage()">Register</a>
     </div>
   </div>
-
 </main>

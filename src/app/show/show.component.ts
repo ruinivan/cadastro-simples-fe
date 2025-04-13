@@ -7,11 +7,13 @@ import { Validators } from '@angular/forms';
 import { NewUser } from '../shared/interfaces/user.interface';
 import { NewUserService } from '../shared/services/newUser.service';
 import { NewUserComponent } from '../new-user/new-user.component';
+import { Router } from '@angular/router';
+import { AccessService } from '../shared/services/access.service';
 
 @Component({
   selector: 'app-show',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NewUserComponent],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './show.component.html',
   styleUrl: './show.component.scss',
 })
@@ -19,7 +21,9 @@ export class ShowComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private newUserService: NewUserService
+    private newUserService: NewUserService,
+    private router: Router,
+    private accessService: AccessService
   ) {}
   editar: boolean = false;
   changeNewUser: boolean = false;
@@ -105,6 +109,20 @@ export class ShowComponent {
     };
     this.newUserService.newUser(body);
     this.changeNewUser = false;
-    await this.showUser();
+    this.formNewUser.reset();
+    this.accessService.allowAccess();
+    this.router.navigate(['/show-users']);
+  }
+
+  newUser() {
+    const body: NewUser = {
+      name: this.formNewUser.get('name')?.value,
+      email: this.formNewUser.get('email')?.value,
+      password: this.formNewUser.get('password')?.value,
+      birthDay: this.formNewUser.get('birthDay')?.value,
+      telephone: this.formNewUser.get('telephone')?.value,
+    };
+    this.newUserService.newUser(body);
+    this.router.navigate(['']);
   }
 }

@@ -8,10 +8,10 @@
     <td>Telephone: {{ user.telephone }}</td>
     <td>
       <button (click)="editUser(user._id)" class="button" id="edit">
-        Editar
+        Edit
       </button>
       <button (click)="deleteUser(user._id)" class="button" id="delete">
-        Apagar
+        Delete
       </button>
     </td>
   </tr>
@@ -37,11 +37,45 @@
 
   <input formControlName="telephone" name="telephone" />
 
-  <button id="confirmar" [disabled]="!formEdit.valid" (click)="confirm()">
-    AddNewUser
+  <button
+    [ngStyle]="{ 'background-color': formEdit.valid ? '#0000ff' : '#add8e6' }"
+    id="confirmar"
+    [disabled]="!formEdit.valid"
+    (click)="confirm()"
+  >
+    Confirm
   </button>
 </form>
-<button (click)="changeNewUserButton()" id="NewUserButton">
-  AddUser
-</button>
-<app-new-user *ngIf="changeNewUser"></app-new-user>
+<button (click)="changeNewUserButton()" id="NewUserButton">AddUser</button>
+<form *ngIf="changeNewUser" [formGroup]="formNewUser">
+  <label for="name">Name</label>
+
+  <input formControlName="name" name="name" />
+
+  <label for="email">Email</label>
+
+  <input formControlName="email" name="email" />
+
+  <label for="password">Password</label>
+
+  <input formControlName="password" name="password" />
+
+  <label for="birthDay">BirthDay</label>
+
+  <input formControlName="birthDay" name="birthDay" />
+
+  <label for="telephone">Telephone</label>
+
+  <input formControlName="telephone" name="telephone" />
+
+  <button
+    id="newUserButton"
+    [ngStyle]="{
+      'background-color': formNewUser.valid ? '#0000ff' : '#add8e6'
+    }"
+    [disabled]="!formNewUser.valid"
+    (click)="newUser()"
+  >
+    Register New User
+  </button>
+</form>

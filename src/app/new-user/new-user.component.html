@@ -14,20 +14,23 @@
 
     <input formControlName="password" name="password" />
 
-    <label for="BirhDay">BirthDay</label>
+    <label for="birthDay">BirthDay</label>
 
-    <input formControlName="BirhDay" name="BirhDay" />
+    <input formControlName="birthDay" name="birthDay" />
 
     <label for="telephone">Telephone</label>
 
     <input formControlName="telephone" name="telephone" />
 
     <button
-      id="NewUserButton"
+      id="newUserButton"
+      [ngStyle]="{
+        'background-color': formNewUser.valid ? '#0000ff' : '#add8e6'
+      }"
       [disabled]="!formNewUser.valid"
       (click)="newUser()"
     >
-      Cadastrar
+      Register New User
     </button>
   </form>
 </main>
