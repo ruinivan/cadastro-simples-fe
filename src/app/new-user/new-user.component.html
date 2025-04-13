@@ -1,0 +1,33 @@
+<main>
+  <h1>New User</h1>
+
+  <form [formGroup]="formNewUser">
+    <label for="name">Name</label>
+
+    <input formControlName="name" name="name" />
+
+    <label for="email">Email</label>
+
+    <input formControlName="email" name="email" />
+
+    <label for="password">Password</label>
+
+    <input formControlName="password" name="password" />
+
+    <label for="BirhDay">BirthDay</label>
+
+    <input formControlName="BirhDay" name="BirhDay" />
+
+    <label for="telephone">Telephone</label>
+
+    <input formControlName="telephone" name="telephone" />
+
+    <button
+      id="NewUserButton"
+      [disabled]="!formNewUser.valid"
+      (click)="newUser()"
+    >
+      Cadastrar
+    </button>
+  </form>
+</main>

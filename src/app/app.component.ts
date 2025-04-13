@@ -10,5 +10,5 @@ import { LoginComponent } from './login/login.component';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  title = 'cadastro-simples-fe';
+  title = 'AddUser';
 }

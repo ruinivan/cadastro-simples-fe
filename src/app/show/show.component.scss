@@ -1,0 +1,14 @@
+table{
+  margin: 50px;
+  tr{
+    td{
+      width: 250px;
+      border-width: 3px;
+      padding: 5px;
+
+      .button{
+        margin-left: 10px;
+      }
+    }
+  }
+}

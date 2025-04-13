@@ -1,0 +1,33 @@
+main{
+  place-content: center;
+  margin: auto;
+  width: 50vw;
+  height: 80vh;
+
+  h1{
+    padding-bottom: 3.5vh;
+    display: block;
+    color: blue;
+    text-align: center;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+      sans-serif;
+    font-size: 10vh;
+  }
+
+  form{
+    display: flex;
+    flex-direction: column;
+    width: 30vw;
+    margin: auto;
+  }
+
+  #NewUserButton{
+    width: 10vw;
+    height: 5vh;
+    margin: auto;
+    margin-top: 5vh;
+  }
+}
+
+

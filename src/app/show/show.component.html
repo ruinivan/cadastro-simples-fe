@@ -1,0 +1,47 @@
+<table>
+  <tr *ngFor="let user of users">
+    <td>Id: {{ user._id }}</td>
+    <td>Name: {{ user.name }}</td>
+    <td>Email: {{ user.email }}</td>
+    <td>Password: {{ user.password }}</td>
+    <td>BirthDay: {{ user.birthDay }}</td>
+    <td>Telephone: {{ user.telephone }}</td>
+    <td>
+      <button (click)="editUser(user._id)" class="button" id="edit">
+        Editar
+      </button>
+      <button (click)="deleteUser(user._id)" class="button" id="delete">
+        Apagar
+      </button>
+    </td>
+  </tr>
+</table>
+<form [formGroup]="formEdit" *ngIf="editar">
+  <label for="name">Name</label>
+
+  <input formControlName="name" name="name" />
+
+  <label for="email">Email</label>
+
+  <input formControlName="email" name="email" />
+
+  <label for="password">Password</label>
+
+  <input formControlName="password" name="password" />
+
+  <label for="birthDay">BirthDay</label>
+
+  <input formControlName="birthDay" name="birthDay" />
+
+  <label for="telephone">Telephone</label>
+
+  <input formControlName="telephone" name="telephone" />
+
+  <button id="confirmar" [disabled]="!formEdit.valid" (click)="confirm()">
+    AddNewUser
+  </button>
+</form>
+<button (click)="changeNewUserButton()" id="NewUserButton">
+  AddUser
+</button>
+<app-new-user *ngIf="changeNewUser"></app-new-user>

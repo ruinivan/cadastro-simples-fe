@@ -7,7 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router, RouterModule, RouterOutlet } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service';
 
 @Component({
@@ -28,17 +28,17 @@ export class LoginComponent {
 
   form: FormGroup<any> = this.fb.group({
     email: ['', [Validators.email, Validators.required]],
-    senha: ['', [Validators.required]],
+    password: ['', [Validators.required]],
   });
 
   changeShowPasswordStatus() {
     this.showPassword = !this.showPassword;
   }
 
-  async enviarLogin() {
+  async sendLogin() {
     const body = {
       email: this.form.get('email')?.value,
-      senha: this.form.get('senha')?.value,
+      password: this.form.get('password')?.value,
     };
     try {
       const response: any = await this.authService.login(body);
@@ -46,12 +46,15 @@ export class LoginComponent {
       console.log(response);
 
       // if(!response.status) {
-      //   alert()
+      //   alert(response.status)
       // }
-    } catch (error) {}
+      this.router.navigate(['/show-users']);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  cadastroPage() {
-    this.router.navigate(['/cadastro']);
+  newUserPage() {
+    this.router.navigate(['/new-user']);
   }
 }

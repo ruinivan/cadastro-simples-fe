@@ -3,7 +3,7 @@
 
   <div id="div-login">
     <form [formGroup]="form">
-      <div class="preencher">
+      <div class="fillIn">
         <label><p>Email</p></label>
 
         <input
@@ -23,32 +23,47 @@
         >
           Campo obrigatório
         </span>
+
       </div>
 
-      <div class="preencher">
-        <label><p>Senha</p></label>
-        <div id="senha_login">
+      <div class="fillIn">
+
+        <label><p>password</p></label>
+
+        <div id="password_login">
+
           <input
-            placeholder="senha"
-            name="senha"
-            formControlName="senha"
+            placeholder="password"
+            name="password"
+            formControlName="password"
             [type]="showPassword ? 'text' : 'password'"
           />
 
-          <button id="visual_senha" (click)="changeShowPasswordStatus()">
+          <button id="visual_password" (click)="changeShowPasswordStatus()">
             <span>{{ showPassword ? "O" : "O" }}</span>
           </button>
+
         </div>
+
         <span
-          *ngIf="form.get('senha')?.touched && form.get('senha')?.errors?.['required']"
+          *ngIf="form.get('password')?.touched && form.get('password')?.errors?.['required']"
         >
           Campo obrigatório
         </span>
+
       </div>
+
     </form>
-    <button id="login_button" [disabled]="!form.valid" (click)="enviarLogin()">
+
+    <button id="login_button" [disabled]="!form.valid" (click)="sendLogin()">
       Login
     </button>
-    <button (click)="cadastroPage()">Não tem conta? Clique aqui</button>
+
+    <div id="newUser">
+
+    <p class="newUser">Não tem conta?</p><a id="changePage" (click)="newUserPage()">Cadastra-se</a>
+
+    </div>
   </div>
+
 </main>
