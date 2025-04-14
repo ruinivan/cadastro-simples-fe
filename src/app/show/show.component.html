@@ -7,75 +7,11 @@
     <td>BirthDay: {{ user.birthDay }}</td>
     <td>Telephone: {{ user.telephone }}</td>
     <td>
-      <button (click)="editUser(user._id)" class="button" id="edit">
-        Edit
-      </button>
-      <button (click)="deleteUser(user._id)" class="button" id="delete">
+      <button (click)="doUser(user)" class="button" id="edit">Edit</button>
+      <button (click)="deleteUser(user._id!)" class="button" id="delete">
         Delete
       </button>
     </td>
   </tr>
 </table>
-<form [formGroup]="formEdit" *ngIf="editar">
-  <label for="name">Name</label>
-
-  <input formControlName="name" name="name" />
-
-  <label for="email">Email</label>
-
-  <input formControlName="email" name="email" />
-
-  <label for="password">Password</label>
-
-  <input formControlName="password" name="password" />
-
-  <label for="birthDay">BirthDay</label>
-
-  <input formControlName="birthDay" name="birthDay" />
-
-  <label for="telephone">Telephone</label>
-
-  <input formControlName="telephone" name="telephone" />
-
-  <button
-    [ngStyle]="{ 'background-color': formEdit.valid ? '#0000ff' : '#add8e6' }"
-    id="confirmar"
-    [disabled]="!formEdit.valid"
-    (click)="confirm()"
-  >
-    Confirm
-  </button>
-</form>
-<button (click)="changeNewUserButton()" id="NewUserButton">AddUser</button>
-<form *ngIf="changeNewUser" [formGroup]="formNewUser">
-  <label for="name">Name</label>
-
-  <input formControlName="name" name="name" />
-
-  <label for="email">Email</label>
-
-  <input formControlName="email" name="email" />
-
-  <label for="password">Password</label>
-
-  <input formControlName="password" name="password" />
-
-  <label for="birthDay">BirthDay</label>
-
-  <input formControlName="birthDay" name="birthDay" />
-
-  <label for="telephone">Telephone</label>
-
-  <input formControlName="telephone" name="telephone" />
-
-  <button
-    id="newUserButton"
-    [ngStyle]="{
-      'background-color': formNewUser.valid ? '#0000ff' : '#add8e6'
-    }"
-    [disabled]="!formNewUser.valid"
-    (click)="newUser()"
-  >
-    Register New User
-  </button>
-</form>
+<button (click)="doUser()" id="NewUserButton">AddUser</button>

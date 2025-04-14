@@ -1,0 +1,33 @@
+<h2 mat-dialog-title>User</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="formEdit">
+    <label for="name">Name</label>
+    <input formControlName="name" name="name" />
+
+    <label for="email">Email</label>
+    <input formControlName="email" name="email" />
+
+    <label for="password">Password</label>
+    <input formControlName="password" name="password" />
+
+    <label for="birthDay">BirthDay</label>
+    <input formControlName="birthDay" name="birthDay" />
+
+    <label for="telephone">Telephone</label>
+    <input formControlName="telephone" name="telephone" />
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="center">
+  <button mat-button (click)="close()">Cancelar</button>
+  <button
+    mat-raised-button
+    color="primary"
+    id="confirmar"
+    [disabled]="!formEdit.valid"
+    (click)="confirm()"
+  >
+    Confirmar
+  </button>
+</mat-dialog-actions>

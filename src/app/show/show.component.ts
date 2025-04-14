@@ -1,19 +1,36 @@
-import { Component } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { Component, Inject } from '@angular/core';
 import { AuthService } from '../shared/services/auth.service';
-import { EditUser, User } from '../shared/interfaces/user.interface';
+import { User } from '../shared/interfaces/user.interface';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { Validators } from '@angular/forms';
-import { NewUser } from '../shared/interfaces/user.interface';
-import { NewUserService } from '../shared/services/newUser.service';
-import { NewUserComponent } from '../new-user/new-user.component';
 import { Router } from '@angular/router';
 import { AccessService } from '../shared/services/access.service';
+import { EditUserModalComponent } from './components/edit-user-modal/edit-user-modal.component';
+import {
+  MatDialog,
+  MAT_DIALOG_DATA,
+  MatDialogTitle,
+  MatDialogContent,
+  MatDialogModule,
+} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-show',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatDialogModule,
+  ],
   templateUrl: './show.component.html',
   styleUrl: './show.component.scss',
 })
@@ -21,9 +38,9 @@ export class ShowComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private newUserService: NewUserService,
     private router: Router,
-    private accessService: AccessService
+    private accessService: AccessService,
+    public dialog: MatDialog
   ) {}
   editar: boolean = false;
   changeNewUser: boolean = false;
@@ -42,45 +59,24 @@ export class ShowComponent {
     }
   }
 
-  formEdit: FormGroup<any> = this.fb.group({
-    name: ['', Validators.required],
-    email: ['', Validators.required],
-    password: ['', Validators.required],
-    birthDay: ['', Validators.required],
-    telephone: [''],
-  });
-
-  async editUser(id: string) {
-    this.editar = true;
-    const user: any = await this.authService.search(id);
-    this.formEdit.patchValue({
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      password: user.password,
-      birthDay: user.birthDay,
-      telephone: user.telephone,
+  async doUser(user?: User) {
+    const dialog = await this.dialog.open(EditUserModalComponent, {
+      data: user ? user : null,
+      width: '35vw', // ou outro valor
+      disableClose: false,
+      autoFocus: true,
     });
-    this.editUserId = id;
-  }
-
-  async confirm() {
-    const body: EditUser = {
-      id: this.editUserId,
-      name: this.formEdit.get('name')?.value,
-      email: this.formEdit.get('email')?.value,
-      password: this.formEdit.get('password')?.value,
-      birthDay: this.formEdit.get('birthDay')?.value,
-      telephone: this.formEdit.get('telephone')?.value,
-    };
-    await this.authService.update(body);
-    this.editar = false;
-    await this.showUser();
+    dialog.afterClosed().subscribe((result) => {
+      if (result) {
+        this.showUser();
+      }
+    });
+    // Dialog quando fechar atualiza a lista de usuários
   }
 
   async deleteUser(id: string) {
     try {
-      const userDeleted = await this.authService.delete(id);
+      await this.authService.delete(id!);
       this.showUser();
     } catch (error) {
       console.log(error);
@@ -100,14 +96,14 @@ export class ShowComponent {
   });
 
   async newUserButtun() {
-    const body: NewUser = {
+    const body: User = {
       name: this.formNewUser.get('name')?.value,
       email: this.formNewUser.get('email')?.value,
       password: this.formNewUser.get('password')?.value,
       birthDay: this.formNewUser.get('birthDay')?.value,
       telephone: this.formNewUser.get('telephone')?.value,
     };
-    this.newUserService.newUser(body);
+    this.authService.create(body);
     this.changeNewUser = false;
     this.formNewUser.reset();
     this.accessService.allowAccess();
@@ -115,14 +111,14 @@ export class ShowComponent {
   }
 
   newUser() {
-    const body: NewUser = {
+    const body: User = {
       name: this.formNewUser.get('name')?.value,
       email: this.formNewUser.get('email')?.value,
       password: this.formNewUser.get('password')?.value,
       birthDay: this.formNewUser.get('birthDay')?.value,
       telephone: this.formNewUser.get('telephone')?.value,
     };
-    this.newUserService.newUser(body);
+    this.authService.create(body);
     this.router.navigate(['']);
   }
 }

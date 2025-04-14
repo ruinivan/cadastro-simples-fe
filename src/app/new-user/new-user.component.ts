@@ -7,9 +7,9 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { NewUser } from '../shared/interfaces/user.interface';
-import { NewUserService } from '../shared/services/newUser.service';
 import { Router } from '@angular/router';
+import { User } from '../shared/interfaces/user.interface';
+import { AuthService } from '../shared/services/auth.service';
 
 @Component({
   selector: 'app-new-user',
@@ -21,8 +21,8 @@ import { Router } from '@angular/router';
 export class NewUserComponent {
   constructor(
     private fb: FormBuilder,
-    private newUserService: NewUserService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   formNewUser: FormGroup<any> = this.fb.group({
@@ -34,14 +34,14 @@ export class NewUserComponent {
   });
 
   newUser() {
-    const body: NewUser = {
+    const body: User = {
       name: this.formNewUser.get('name')?.value,
       email: this.formNewUser.get('email')?.value,
       password: this.formNewUser.get('password')?.value,
       birthDay: this.formNewUser.get('birthDay')?.value,
       telephone: this.formNewUser.get('telephone')?.value,
     };
-    this.newUserService.newUser(body);
+    this.authService.create(body);
     this.router.navigate(['']);
   }
 }

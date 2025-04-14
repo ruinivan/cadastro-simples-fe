@@ -1,30 +1,14 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
 import { User } from '../interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
-  url = 'http://localhost:3000/user/';
-
+export class UserService {
   constructor(private httpClient: HttpClient) {}
-
-  async login(body: { email: string; password: string }) {
-    return await lastValueFrom(this.httpClient.post(this.url + 'login', body));
-  }
-
-  async create(body: User) {
-    try {
-      const retorno = await lastValueFrom(
-        this.httpClient.post(this.url, body, { observe: 'response' })
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
+  url = 'http://localhost:3000/user/';
   async show() {
     return await lastValueFrom(this.httpClient.get(this.url));
   }
