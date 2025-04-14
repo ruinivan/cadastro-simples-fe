@@ -2,64 +2,55 @@
   <h1>Login</h1>
 
   <div id="div-login">
-    <form [formGroup]="form">
-      <div class="fillIn">
-        <label><p>Email</p></label>
-
+    <form [formGroup]="formLogin" (ngSubmit)="sendLogin()">
+      <mat-form-field>
+        <mat-label>Email</mat-label>
         <input
-          placeholder="exemple@gmail.com"
+          type="email"
+          matInput
           formControlName="email"
-          name="email"
+          placeholder="Ex. pat@example.com"
         />
-
-        <span
-          *ngIf="form.get('email')?.touched && form.get('email')?.errors?.['email']"
+        <mat-error *ngIf="email.hasError('required')"
+          >This field is required</mat-error
         >
-          Invalid email format
-        </span>
-
-        <span
-          *ngIf="form.get('email')?.touched && form.get('email')?.errors?.['required']"
+        <mat-error
+          *ngIf="email.hasError('email') && !email.hasError('required')"
         >
-          Required field
-        </span>
-      </div>
+          Enter valid email
+        </mat-error>
+      </mat-form-field>
 
-      <div class="fillIn">
-        <label><p>Password</p></label>
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input
+          type="password"
+          matInput
+          formControlName="password"
+          placeholder="Your password"
+        />
+        <mat-error *ngIf="password.hasError('required')"
+          >This field is required</mat-error
+        >
+      </mat-form-field>
 
-        <div id="password_login">
-          <input
-            placeholder="password"
-            name="password"
-            formControlName="password"
-            [type]="showPassword ? 'text' : 'password'"
-          />
-
-          <button id="visual_password" (click)="changeShowPasswordStatus()">
-            <span>{{ showPassword ? "O" : "O" }}</span>
+      <div class="buttonLogin1">
+        <div class="buttonLogin2">
+          <button
+            mat-flat-button
+            color="primary"
+            type="submit"
+            [disabled]="!formLogin.valid"
+            id="login_button"
+          >
+            Login
           </button>
         </div>
-
-        <span
-          *ngIf="form.get('password')?.touched && form.get('password')?.errors?.['required']"
-        >
-          Required field
-        </span>
       </div>
     </form>
 
-    <button
-      [ngStyle]="{ 'background-color': form.valid ? '#0000ff' : '#add8e6' }"
-      id="login_button"
-      [disabled]="!form.valid"
-      (click)="sendLogin()"
-    >
-      Login
-    </button>
-
     <div id="newUser">
-      <p class="newUser">Don`t have a account?</p>
+      <p class="newUser">Don’t have an account?</p>
       <a id="changePage" (click)="newUserPage()">Register</a>
     </div>
   </div>

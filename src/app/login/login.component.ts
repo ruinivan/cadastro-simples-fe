@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
+  FormControl,
   FormsModule,
   ReactiveFormsModule,
   Validators,
@@ -10,16 +11,34 @@ import {
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service';
 import { AccessService } from '../shared/services/access.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatDividerModule,
+    MatIconModule,
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
-  showPassword: boolean = false;
+  formLogin: FormGroup = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', Validators.required],
+  });
 
   constructor(
     private fb: FormBuilder,
@@ -28,29 +47,28 @@ export class LoginComponent {
     private accessService: AccessService
   ) {}
 
-  form: FormGroup<any> = this.fb.group({
-    email: ['', [Validators.email, Validators.required]],
-    password: ['', [Validators.required]],
-  });
+  get email(): FormControl {
+    return this.formLogin.get('email') as FormControl;
+  }
 
-  changeShowPasswordStatus() {
-    this.showPassword = !this.showPassword;
+  get password(): FormControl {
+    return this.formLogin.get('password') as FormControl;
   }
 
   async sendLogin() {
+    if (!this.formLogin.valid) return;
+
     const body = {
-      email: this.form.get('email')?.value,
-      password: this.form.get('password')?.value,
+      email: this.email.value,
+      password: this.password.value,
     };
+
     try {
-      const response: any = await this.authService.login(body);
-      // if(!response.status) {
-      //   alert(response.status)
-      // }
+      const response = await this.authService.login(body);
       this.accessService.allowAccess();
       this.router.navigate(['/show-users']);
     } catch (error) {
-      console.log(error);
+      console.error('Login error:', error);
     }
   }
 
