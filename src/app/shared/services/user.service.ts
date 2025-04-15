@@ -9,6 +9,7 @@ import { User } from '../interfaces/user.interface';
 export class UserService {
   constructor(private httpClient: HttpClient) {}
   url = 'http://localhost:3000/user/';
+
   async show() {
     return await lastValueFrom(this.httpClient.get(this.url));
   }

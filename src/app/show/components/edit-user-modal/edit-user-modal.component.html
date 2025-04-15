@@ -1,33 +1,65 @@
 <h2 mat-dialog-title>User</h2>
+<form [formGroup]="formUser" (ngSubmit)="doUser()">
+  <mat-form-field>
+    <mat-label>Name</mat-label>
 
-<mat-dialog-content>
-  <form [formGroup]="formEdit">
-    <label for="name">Name</label>
-    <input formControlName="name" name="name" />
+    <input matInput formControlName="name" placeholder="Your name" />
+    <mat-error *ngIf="formUser.hasError('required', 'name')"
+      >This field is required</mat-error
+    >
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Email</mat-label>
 
-    <label for="email">Email</label>
-    <input formControlName="email" name="email" />
-
-    <label for="password">Password</label>
-    <input formControlName="password" name="password" />
-
-    <label for="birthDay">BirthDay</label>
-    <input formControlName="birthDay" name="birthDay" />
-
-    <label for="telephone">Telephone</label>
-    <input formControlName="telephone" name="telephone" />
-  </form>
-</mat-dialog-content>
-
-<mat-dialog-actions align="center">
-  <button mat-button (click)="close()">Cancelar</button>
-  <button
-    mat-raised-button
-    color="primary"
-    id="confirmar"
-    [disabled]="!formEdit.valid"
-    (click)="confirm()"
+    <input
+      type="email"
+      matInput
+      formControlName="email"
+      placeholder="Ex. username@example.com"
+    />
+    <mat-error *ngIf="formUser.hasError('required', 'email')"
+      >This field is required</mat-error
+    >
+    <mat-error *ngIf="formUser.hasError('email', 'email')"
+      >Enter valid email</mat-error
+    ></mat-form-field
   >
-    Confirmar
+
+  <mat-form-field>
+    <mat-label>Password</mat-label>
+
+    <input
+      type="password"
+      matInput
+      formControlName="password"
+      placeholder="Your password"
+    />
+    <mat-error *ngIf="formUser.hasError('required', 'password')"
+      >This field is required</mat-error
+    >
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>BirthDay</mat-label>
+    <input matInput [matDatepicker]="picker" formControlName="birthDay" />
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Telephone</mat-label>
+
+    <input matInput formControlName="telephone" placeholder="Your telephone" />
+  </mat-form-field>
+
+  <button
+    mat-flat-button
+    type="submit"
+    class="userButton"
+    id="doUser_button"
+    [ngStyle]="{
+      'background-color': formUser.valid ? '#0000ff' : '#add8e6'
+    }"
+    [disabled]="!formUser.valid"
+  >
+    Do User
   </button>
-</mat-dialog-actions>
+</form>

@@ -1,17 +1,48 @@
-<table>
-  <tr *ngFor="let user of users">
-    <td>Id: {{ user._id }}</td>
-    <td>Name: {{ user.name }}</td>
-    <td>Email: {{ user.email }}</td>
-    <td>Password: {{ user.password }}</td>
-    <td>BirthDay: {{ user.birthDay }}</td>
-    <td>Telephone: {{ user.telephone }}</td>
-    <td>
-      <button (click)="doUser(user)" class="button" id="edit">Edit</button>
-      <button (click)="deleteUser(user._id!)" class="button" id="delete">
+<table mat-table [dataSource]="users" *ngIf="!loading">
+  <ng-container matColumnDef="_id">
+    <th mat-header-cell *matHeaderCellDef>Id</th>
+    <td mat-cell *matCellDef="let element">{{ element._id }}</td>
+  </ng-container>
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>Name</th>
+    <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+  </ng-container>
+  <ng-container matColumnDef="email">
+    <th mat-header-cell *matHeaderCellDef>Email</th>
+    <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+  </ng-container>
+  <ng-container matColumnDef="password">
+    <th mat-header-cell *matHeaderCellDef>Password</th>
+    <td mat-cell *matCellDef="let element">{{ element.password }}</td>
+  </ng-container>
+  <ng-container matColumnDef="birthDay">
+    <th mat-header-cell *matHeaderCellDef>BirthDay</th>
+    <td mat-cell *matCellDef="let element">
+      {{ element.birthDay | date : "dd/MM/yyyy" }}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="telephone">
+    <th mat-header-cell *matHeaderCellDef>telephone</th>
+    <td mat-cell *matCellDef="let element">{{ element.telephone }}</td>
+  </ng-container>
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>Actions</th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-button (click)="doUser(element)" class="button" id="edit">
+        Edit
+      </button>
+      <button
+        mat-flat-button
+        (click)="deleteUser(element._id)"
+        class="button"
+        id="delete"
+      >
         Delete
       </button>
     </td>
-  </tr>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>
-<button (click)="doUser()" id="NewUserButton">AddUser</button>
+
+<!-- <button (click)="doUser()" id="NewUserButton">AddUser</button> -->

@@ -1,79 +1,67 @@
-import { Component, Inject } from '@angular/core';
-import { AuthService } from '../../../shared/services/auth.service';
-import { User } from '../../../shared/interfaces/user.interface';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Validators } from '@angular/forms';
+import { Component } from '@angular/core';
 import {
-  MatDialog,
-  MAT_DIALOG_DATA,
-  MatDialogContent,
-  MatDialogActions,
-  MatDialogTitle,
-} from '@angular/material/dialog';
-import { MatDialogRef } from '@angular/material/dialog';
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormsModule,
+  ReactiveFormsModule,
+  FormControl,
+} from '@angular/forms';
+import { Router } from '@angular/router';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { User } from '../../../shared/interfaces/user.interface';
+import { AuthService } from '../../../shared/services/auth.service';
 
 @Component({
-  selector: 'app-edit-user-modal',
+  selector: '',
   standalone: true,
   imports: [
-    MatDialogContent,
     CommonModule,
+    FormsModule,
     ReactiveFormsModule,
-    MatDialogContent,
-    MatDialogActions,
-    MatDialogTitle,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatDividerModule,
+    MatIconModule,
+    MatDatepickerModule,
   ],
-  providers: [MatDialog],
-  templateUrl: './edit-user-modal.component.html',
-  styleUrl: './edit-user-modal.component.scss',
+  templateUrl: 'edit-user-modal.component.html',
+  styleUrl: 'edit-user-modal.component.scss',
+  providers: [provideNativeDateAdapter()],
 })
 export class EditUserModalComponent {
-  isEdition: boolean = false;
-
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: Partial<User>,
-    private authService: AuthService,
     private fb: FormBuilder,
-    private dialogRef: MatDialogRef<EditUserModalComponent>
+    private router: Router,
+    private authService: AuthService
   ) {}
 
-  formEdit: FormGroup<any> = this.fb.group({
-    name: ['', Validators.required],
-    email: ['', Validators.required],
-    password: ['', Validators.required],
+  formUser: FormGroup<any> = this.fb.group({
+    name: ['', [Validators.required]],
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required]],
     birthDay: [],
     telephone: [],
   });
 
-  async ngOnInit() {
-    if (this.data?._id) {
-      this.isEdition = true;
-      this.formEdit.patchValue({
-        id: this.data._id,
-        name: this.data.name,
-        email: this.data.email,
-        password: this.data.password,
-        birthDay: this.data.birthDay,
-        telephone: this.data.telephone,
-      });
-    }
-  }
-
-  async confirm() {
+  doUser() {
     const body: User = {
-      name: this.formEdit.get('name')?.value,
-      email: this.formEdit.get('email')?.value,
-      password: this.formEdit.get('password')?.value,
-      birthDay: this.formEdit.get('birthDay')?.value,
-      telephone: this.formEdit.get('telephone')?.value,
+      name: this.formUser.get('name')?.value,
+      email: this.formUser.get('email')?.value,
+      password: this.formUser.get('password')?.value,
+      birthDay: this.formUser.get('birthDay')?.value,
+      telephone: this.formUser.get('telephone')?.value,
     };
-    if (this.data?._id) await this.authService.update(this.data._id!, body);
-    //else await this.authService.create(body);
-    this.dialogRef.close(true);
-  }
-
-  close() {
-    this.dialogRef.close();
+    const response = this.authService.create(body);
+    console.log(response);
+    this.router.navigate(['']);
   }
 }

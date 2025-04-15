@@ -1,7 +1,7 @@
 // guards/botao-acesso.guard.ts
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import { AccessService } from '../shared/services/access.service';
+import { AccessService } from '../services/access.service';
 
 @Injectable({
   providedIn: 'root',

@@ -16,6 +16,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 @Component({
   selector: 'app-new-user',
@@ -29,9 +31,11 @@ import { MatDividerModule } from '@angular/material/divider';
     MatButtonModule,
     MatDividerModule,
     MatIconModule,
+    MatDatepickerModule,
   ],
   templateUrl: './new-user.component.html',
   styleUrl: './new-user.component.scss',
+  providers: [provideNativeDateAdapter()],
 })
 export class NewUserComponent {
   constructor(
@@ -41,31 +45,12 @@ export class NewUserComponent {
   ) {}
 
   formNewUser: FormGroup<any> = this.fb.group({
-    name: ['', Validators.required],
-    email: ['', Validators.required, Validators.email],
-    password: ['', Validators.required],
+    name: ['', [Validators.required]],
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required]],
     birthDay: [],
     telephone: [],
   });
-
-  get name(): FormControl {
-    return this.formNewUser.get('name') as FormControl;
-  }
-  get email(): FormControl {
-    return this.formNewUser.get('email') as FormControl;
-  }
-
-  get password(): FormControl {
-    return this.formNewUser.get('password') as FormControl;
-  }
-
-  get birthDay(): FormControl {
-    return this.formNewUser.get('birthDay') as FormControl;
-  }
-
-  get telephone(): FormControl {
-    return this.formNewUser.get('telephone') as FormControl;
-  }
 
   newUser() {
     const body: User = {
@@ -77,7 +62,6 @@ export class NewUserComponent {
     };
     const response = this.authService.create(body);
     console.log(response);
-
-    //this.router.navigate(['']);
+    this.router.navigate(['']);
   }
 }
