@@ -20,8 +20,10 @@ export class AuthService {
       const retorno = await lastValueFrom(
         this.httpClient.post(this.url, body, { observe: 'response' })
       );
+      return retorno;
     } catch (error) {
       console.log(error);
+      return;
     }
   }
 

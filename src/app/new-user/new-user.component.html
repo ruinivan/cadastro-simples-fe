@@ -1,34 +1,67 @@
 <main>
   <h1>New User</h1>
 
-  <form [formGroup]="formNewUser">
-    <label for="name">Name</label>
+  <form [formGroup]="formNewUser" (ngSubmit)="newUser()">
+    <mat-form-field>
+      <mat-label>Name</mat-label>
 
-    <input formControlName="name" name="name" />
+      <input matInput formControlName="name" placeholder="Your name" />
+      <mat-error *ngIf="name.hasError('required')"
+        >This field is required</mat-error
+      >
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Email</mat-label>
 
-    <label for="email">Email</label>
+      <input
+        type="email"
+        matInput
+        formControlName="email"
+        placeholder="Ex. username@example.com"
+      />
+      <mat-error *ngIf="email.hasError('required')"
+        >This field is required</mat-error
+      >
+      <mat-error *ngIf="email.hasError('email') && !email.hasError('required')"
+        >Enter valid email</mat-error
+      ></mat-form-field
+    >
 
-    <input formControlName="email" name="email" />
+    <mat-form-field>
+      <mat-label>Password</mat-label>
 
-    <label for="password">Password</label>
+      <input
+        type="password"
+        matInput
+        formControlName="password"
+        placeholder="Your password"
+      />
+      <mat-error *ngIf="password.hasError('required')"
+        >This field is required</mat-error
+      >
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>BirthDay</mat-label>
 
-    <input formControlName="password" name="password" />
+      <input matInput formControlName="birthDay" placeholder="Your birthday" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Telephone</mat-label>
 
-    <label for="birthDay">BirthDay</label>
-
-    <input formControlName="birthDay" name="birthDay" />
-
-    <label for="telephone">Telephone</label>
-
-    <input formControlName="telephone" name="telephone" />
+      <input
+        matInput
+        formControlName="telephone"
+        placeholder="Your telephone"
+      />
+    </mat-form-field>
 
     <button
+      type="submit"
       id="newUserButton"
       [ngStyle]="{
         'background-color': formNewUser.valid ? '#0000ff' : '#add8e6'
       }"
       [disabled]="!formNewUser.valid"
-      (click)="newUser()"
     >
       Register New User
     </button>

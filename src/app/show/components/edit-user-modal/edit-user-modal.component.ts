@@ -69,7 +69,7 @@ export class EditUserModalComponent {
       telephone: this.formEdit.get('telephone')?.value,
     };
     if (this.data?._id) await this.authService.update(this.data._id!, body);
-    else await this.authService.create(body);
+    //else await this.authService.create(body);
     this.dialogRef.close(true);
   }
 

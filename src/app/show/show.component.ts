@@ -94,31 +94,4 @@ export class ShowComponent {
     birthDay: ['', Validators.required],
     telephone: [''],
   });
-
-  async newUserButtun() {
-    const body: User = {
-      name: this.formNewUser.get('name')?.value,
-      email: this.formNewUser.get('email')?.value,
-      password: this.formNewUser.get('password')?.value,
-      birthDay: this.formNewUser.get('birthDay')?.value,
-      telephone: this.formNewUser.get('telephone')?.value,
-    };
-    this.authService.create(body);
-    this.changeNewUser = false;
-    this.formNewUser.reset();
-    this.accessService.allowAccess();
-    this.router.navigate(['/show-users']);
-  }
-
-  newUser() {
-    const body: User = {
-      name: this.formNewUser.get('name')?.value,
-      email: this.formNewUser.get('email')?.value,
-      password: this.formNewUser.get('password')?.value,
-      birthDay: this.formNewUser.get('birthDay')?.value,
-      telephone: this.formNewUser.get('telephone')?.value,
-    };
-    this.authService.create(body);
-    this.router.navigate(['']);
-  }
 }

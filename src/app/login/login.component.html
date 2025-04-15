@@ -3,24 +3,22 @@
 
   <div id="div-login">
     <form [formGroup]="formLogin" (ngSubmit)="sendLogin()">
-      <mat-form-field>
+      <mat-form-field appearance="fill">
         <mat-label>Email</mat-label>
         <input
           type="email"
           matInput
           formControlName="email"
-          placeholder="Ex. pat@example.com"
+          placeholder="Ex. username@example.com"
         />
         <mat-error *ngIf="email.hasError('required')"
           >This field is required</mat-error
         >
         <mat-error
           *ngIf="email.hasError('email') && !email.hasError('required')"
+          >Enter valid email</mat-error
         >
-          Enter valid email
-        </mat-error>
       </mat-form-field>
-
       <mat-form-field>
         <mat-label>Password</mat-label>
         <input
@@ -33,7 +31,6 @@
           >This field is required</mat-error
         >
       </mat-form-field>
-
       <div class="buttonLogin1">
         <div class="buttonLogin2">
           <button
@@ -48,9 +45,8 @@
         </div>
       </div>
     </form>
-
     <div id="newUser">
-      <p class="newUser">Don’t have an account?</p>
+      <p class="newUser">Dont have an account?</p>
       <a id="changePage" (click)="newUserPage()">Register</a>
     </div>
   </div>

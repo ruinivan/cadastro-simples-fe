@@ -1,33 +1,51 @@
-main{
-  place-content: center;
-  margin: auto;
-  width: 50vw;
-  height: 80vh;
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f0f4ff, #dfeaff);
 
-  h1{
-    padding-bottom: 3.5vh;
-    display: block;
-    color: blue;
-    text-align: center;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-      Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
-      sans-serif;
-    font-size: 10vh;
+  h1 {
+    font-size: 2.5rem;
+    color: #1a237e;
+    margin-bottom: 1.5rem;
+    font-weight: bold;
   }
 
-  form{
+  form {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    width: 30vw;
     display: flex;
     flex-direction: column;
-    width: 30vw;
-    margin: auto;
-  }
+    gap: 1rem;
+    margin-bottom: 2rem;
 
-  #newUserButton{
-    width: 10vw;
-    height: 5vh;
-    margin: auto;
-    margin-top: 5vh;
+    #newUserButton {
+      padding: 0.75rem 2rem;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #ffffff;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+
+      &:disabled {
+        cursor: not-allowed;
+        background-color: #add8e6;
+        color: #f0f0f0;
+      }
+
+      &:not(:disabled) {
+        background-color: #1a73e8;
+        cursor: pointer;
+      }
+
+      &:not(:disabled):hover {
+        background-color: #0000cc;
+      }
+    }
   }
 }
-
-

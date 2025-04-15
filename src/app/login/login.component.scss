@@ -34,7 +34,6 @@ main {
     .buttonLogin2 {
       display: flex;
       justify-content: center;
-      margin-top: 1rem;
     }
 
     button#login_button {
@@ -49,6 +48,11 @@ main {
         cursor: not-allowed;
         background-color: #add8e6;
         color: #f0f0f0;
+      }
+
+      &:not(:disabled) {
+        background-color: #1a73e8;
+        cursor: pointer;
       }
 
       &:not(:disabled):hover {
@@ -79,34 +83,4 @@ main {
       }
     }
   }
-}
-mat-form-field {
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  font-size: 16px;
-  line-height: 1.5;
-  width: 100%;
-
-  .mat-form-field-infix {
-    padding: 0.75em 0;
-  }
-
-  .mat-form-field-underline {
-    height: 1px;
-  }
-
-  input.mat-input-element {
-    font-size: 16px;
-    line-height: 1.5;
-    padding: 0.4em 0;
-  }
-}
-mat-error {
-  font-size: 0.875rem;
-  color: #d32f2f;
-  margin-top: 0.5rem;
-}
-mat-icon {
-  color: #1a237e;
-  font-size: 1.5rem;
-  margin-right: 0.5rem;
 }
