@@ -23,28 +23,25 @@ export class AuthService {
   ) {}
 
   async login(body: { email: string; password: string }) {
-    console.log(body);
     this.response = await lastValueFrom(
       this.httpClient.post(this.url + 'login', body, { observe: 'response' })
     );
-    console.log(this.response);
     if (this.response.status === 200) {
       this.accessService.allowAccess();
-      //this.router.navigate(['/show-users']);
       return (this.response.body as { message: string }).message;
     } else {
-      console.log(this.response);
       return (this.response.body as { message: string }).message;
     }
   }
 
   async create(body: User) {
     try {
-      const response = await lastValueFrom(
+      this.response = await lastValueFrom(
         this.httpClient.post(this.url, body, { observe: 'response' })
       );
-      if (response.status === 201) return response.status;
-      else return;
+      if (this.response.status === 201) {
+        return (this.response.body as { message: string }).message;
+      } else return (this.response.body as { message: string }).message;
     } catch (error) {
       if (error instanceof HttpErrorResponse) {
         return error.error?.message;

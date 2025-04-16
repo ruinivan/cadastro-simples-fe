@@ -16,7 +16,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
-import { HttpResponse, HttpStatusCode } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -37,6 +36,8 @@ import { HttpResponse, HttpStatusCode } from '@angular/common/http';
 })
 export class LoginComponent {
   response: string | undefined;
+  sucess: boolean = false;
+  erro: boolean = false;
 
   formLogin: FormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
@@ -59,6 +60,8 @@ export class LoginComponent {
   }
 
   async sendLogin() {
+    this.erro = false;
+    this.sucess = false;
     if (!this.formLogin.valid) return;
     const body = {
       email: this.email.value,
@@ -66,7 +69,21 @@ export class LoginComponent {
     };
     try {
       this.response = await this.authService.login(body);
-    } catch (error) {}
+      console.log(this.response);
+      if (this.response === 'Login Success') {
+        this.sucess = true;
+        this.accessService.allowAccess();
+        setTimeout(() => {
+          this.router.navigate(['show-users']);
+        }, 2000);
+      } else {
+        this.erro = true;
+        this.response = 'Invalid email or password';
+      }
+    } catch (error) {
+      this.erro = true;
+      this.response = 'Invalid email or password';
+    }
   }
 
   newUserPage() {

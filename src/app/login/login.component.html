@@ -1,6 +1,7 @@
 <main>
   <h1>Login</h1>
-  <span>{{ response }}</span>
+  <span *ngIf="sucess" id="sucess" class="resposta">{{ response }}</span>
+  <span *ngIf="erro" id="error" class="resposta">{{ response }}</span>
   <div id="div-login">
     <form [formGroup]="formLogin" (ngSubmit)="sendLogin()">
       <mat-form-field appearance="fill">

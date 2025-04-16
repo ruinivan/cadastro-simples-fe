@@ -39,7 +39,9 @@ import { HttpStatusCode } from '@angular/common/http';
   providers: [provideNativeDateAdapter()],
 })
 export class NewUserComponent {
-  response: HttpStatusCode | undefined;
+  response: string | string[] | undefined;
+  sucess: boolean = false;
+  erro: boolean = false;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -47,14 +49,22 @@ export class NewUserComponent {
   ) {}
 
   formNewUser: FormGroup<any> = this.fb.group({
-    name: ['', [Validators.required]],
+    name: [
+      '',
+      [Validators.required, Validators.minLength(3), Validators.maxLength(20)],
+    ],
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required]],
+    password: [
+      '',
+      [Validators.required, Validators.minLength(8), Validators.maxLength(20)],
+    ],
     birthDay: [],
     telephone: [],
   });
 
   async newUser() {
+    this.erro = false;
+    this.sucess = false;
     const body: User = {
       name: this.formNewUser.get('name')?.value,
       email: this.formNewUser.get('email')?.value,
@@ -62,9 +72,15 @@ export class NewUserComponent {
       birthDay: this.formNewUser.get('birthDay')?.value,
       telephone: this.formNewUser.get('telephone')?.value,
     };
-    this.response = await this.authService.create(body);
-    if (this.response == 201) {
-      this.router.navigate(['']);
+    const response = await this.authService.create(body);
+    if (response === 'User created sucessfully') {
+      this.sucess = true;
+      setTimeout(() => {
+        this.router.navigate(['']);
+      }, 2000);
+    } else {
+      this.erro = true;
+      this.response = Array.isArray(response) ? response[0] : response;
     }
   }
   voltar() {

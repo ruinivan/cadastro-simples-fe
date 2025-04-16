@@ -7,10 +7,29 @@ main {
   background: linear-gradient(135deg, #f0f4ff, #dfeaff);
 
   h1 {
-    font-size: 2.5rem;
+    font-size: 3.5rem;
     color: #1a237e;
-    margin-bottom: 1.5rem;
+    margin-bottom: 4rem;
     font-weight: bold;
+  }
+
+  .resposta {
+    font-size: 1rem;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    margin-bottom: 0.5rem;
+    position: fixed;
+    z-index: 9999;
+    top: 24%;
+  }
+
+  #sucess {
+    background-color: rgba(28, 240, 55, 0.65);
+  }
+
+  #error {
+    background-color: rgba(240, 128, 128, 0.65);
   }
 
   #div-login {

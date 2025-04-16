@@ -1,13 +1,21 @@
 <main>
   <h1>New User</h1>
-  <span *ngIf="response" id="resposta">{{ response }}</span>
+  <span *ngIf="sucess" id="sucess" class="resposta">{{ response }}</span>
+  <span *ngIf="erro" id="error" class="resposta">{{ response }}</span>
   <form [formGroup]="formNewUser" (ngSubmit)="newUser()">
     <mat-form-field>
       <mat-label>Name</mat-label>
-
-      <input matInput formControlName="name" placeholder="Your name" />
+      <input
+        matInput
+        formControlName="name"
+        placeholder="Your name (Min. 3 letter - Max. 20 letter)"
+      />
       <mat-error *ngIf="formNewUser.hasError('required', 'name')"
         >This field is required</mat-error
+      ><mat-error *ngIf="formNewUser.hasError('minlength', 'name')"
+        >Min. 3 letter</mat-error
+      ><mat-error *ngIf="formNewUser.hasError('maxlength', 'name')"
+        >Max. 20 letter</mat-error
       >
     </mat-form-field>
     <mat-form-field>
@@ -25,19 +33,19 @@
       <mat-error *ngIf="formNewUser.hasError('email', 'email')"
         >Enter valid email</mat-error
       ></mat-form-field
-    >
-
-    <mat-form-field>
+    ><mat-form-field>
       <mat-label>Password</mat-label>
-
       <input
         type="password"
         matInput
         formControlName="password"
         placeholder="Your password"
-      />
-      <mat-error *ngIf="formNewUser.hasError('required', 'password')"
+      /><mat-error *ngIf="formNewUser.hasError('required', 'password')"
         >This field is required</mat-error
+      ><mat-error *ngIf="formNewUser.hasError('minlength', 'password')"
+        >Min. 8 letter</mat-error
+      ><mat-error *ngIf="formNewUser.hasError('maxlength', 'password')"
+        >Max. 20 letter</mat-error
       >
     </mat-form-field>
     <mat-form-field>
@@ -51,28 +59,28 @@
     </mat-form-field>
     <mat-form-field>
       <mat-label>Telephone</mat-label>
-
       <input
         matInput
         formControlName="telephone"
         placeholder="Your telephone"
       />
     </mat-form-field>
-
-    <button
-      mat-flat-button
-      type="submit"
-      class="userButton"
-      id="newUser_button"
-      [ngStyle]="{
-        'background-color': formNewUser.valid ? '#0000ff' : '#add8e6'
-      }"
-      [disabled]="!formNewUser.valid"
-    >
-      Register New User
-    </button>
-    <button mat-flat-button class="userButton" id="back" (click)="voltar()">
-      Back To Login
-    </button>
+    <div id="div_button">
+      <button mat-flat-button class="userButton" id="back" (click)="voltar()">
+        Back To Login
+      </button>
+      <button
+        mat-flat-button
+        type="submit"
+        class="userButton"
+        id="newUser_button"
+        [ngStyle]="{
+          'background-color': formNewUser.valid ? '#0000ff' : '#add8e6'
+        }"
+        [disabled]="!formNewUser.valid"
+      >
+        Register
+      </button>
+    </div>
   </form>
 </main>
