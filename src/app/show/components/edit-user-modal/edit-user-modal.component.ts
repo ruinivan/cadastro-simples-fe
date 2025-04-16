@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -18,6 +18,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { User } from '../../../shared/interfaces/user.interface';
 import { AuthService } from '../../../shared/services/auth.service';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: '',
@@ -38,10 +40,14 @@ import { AuthService } from '../../../shared/services/auth.service';
   providers: [provideNativeDateAdapter()],
 })
 export class EditUserModalComponent {
+  user = inject(MAT_DIALOG_DATA);
+  editUser: boolean = false;
+  loading: boolean = false;
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private dialogRef: MatDialogRef<EditUserModalComponent>
   ) {}
 
   formUser: FormGroup<any> = this.fb.group({
@@ -52,6 +58,21 @@ export class EditUserModalComponent {
     telephone: [],
   });
 
+  ngOnInit() {
+    this.loading = true;
+    if (this.user) {
+      this.formUser.patchValue({
+        name: this.user.name,
+        email: this.user.email,
+        password: this.user.password,
+        birthDay: this.user.birthDay,
+        telephone: this.user.telephone,
+      });
+      this.editUser = true;
+    }
+    this.loading = false;
+  }
+
   doUser() {
     const body: User = {
       name: this.formUser.get('name')?.value,
@@ -60,8 +81,11 @@ export class EditUserModalComponent {
       birthDay: this.formUser.get('birthDay')?.value,
       telephone: this.formUser.get('telephone')?.value,
     };
-    const response = this.authService.create(body);
-    console.log(response);
-    this.router.navigate(['']);
+    if (this.editUser) {
+      this.authService.update(this.user._id, body);
+    } else {
+      const response = this.authService.create(body);
+    }
+    this.dialogRef.close(true);
   }
 }

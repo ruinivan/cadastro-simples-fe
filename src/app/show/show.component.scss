@@ -1,0 +1,82 @@
+table {
+  width: 80vw;
+  margin: 2rem;
+  background-color: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+
+  th {
+    background-color: #e3e8ff;
+    color: #1a237e;
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 1rem;
+    text-align: left;
+  }
+
+  td {
+    padding: 1rem;
+    font-size: 0.95rem;
+    color: #333;
+    border-bottom: 1px solid #e0e0e0;
+
+    &:last-child {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-start;
+    }
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  button.button {
+    font-weight: 500;
+    font-size: 0.75rem;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    min-width: 80px;
+  }
+
+  button#edit {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+
+    &:hover {
+      background-color: #ffe8a1;
+    }
+  }
+
+  button#delete {
+    background-color: #f44336;
+    color: #fff;
+
+    &:hover {
+      background-color: #d32f2f;
+    }
+  }
+}
+.mdc-data-table__table {
+  min-width: 96%;
+}
+
+#NewUserButton {
+  display: block;
+  margin: auto;
+  width: 7rem;
+  height: 2.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #fff;
+  background-color: #1a73e8;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #0d47a1;
+  }
+}

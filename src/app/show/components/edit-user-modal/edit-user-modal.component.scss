@@ -1,7 +1,46 @@
+mat-dialog-content,
 form {
   display: flex;
   flex-direction: column;
-  width: 40vw;
-  height: 65vh;
-  padding: 10px;
+  padding: 1rem 2rem;
+  background-color: #f9f9ff;
+  border-radius: 1rem;
+  max-height: 80vh;
+  width: 35vw;
+}
+
+h2 {
+  text-align: center;
+  color: #1a237e;
+  margin-bottom: 1rem;
+}
+
+mat-error {
+  color: #d32f2f;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+}
+
+.userButton {
+  margin: auto;
+  width: 7rem;
+  height: 2.5rem;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 8px;
+  margin-top: 1rem;
+  color: #fff;
+  transition: background-color 0.3s ease;
+
+  &:disabled {
+    background-color: #add8e6;
+    color: #e0e0e0;
+  }
+  &:not(:disabled) {
+    background-color: #1a73e8;
+    &:hover {
+      background-color: #0d47a1;
+    }
+  }
 }

@@ -78,7 +78,6 @@ export class ShowComponent {
     });
     console.log(user);
     console.log(this.editUserId);
-
     dialog.afterClosed().subscribe((result) => {
       if (result) {
         this.showUser();
