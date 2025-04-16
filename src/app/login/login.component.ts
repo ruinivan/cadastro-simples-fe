@@ -16,6 +16,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
+import { HttpResponse, HttpStatusCode } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -35,6 +36,7 @@ import { MatDividerModule } from '@angular/material/divider';
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
+  response: HttpResponse<object> | undefined;
   formLogin: FormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required],
@@ -57,19 +59,13 @@ export class LoginComponent {
 
   async sendLogin() {
     if (!this.formLogin.valid) return;
-
     const body = {
       email: this.email.value,
       password: this.password.value,
     };
-
     try {
-      const response = await this.authService.login(body);
-      this.accessService.allowAccess();
-      this.router.navigate(['/show-users']);
-    } catch (error) {
-      console.error('Login error:', error);
-    }
+      console.log(await this.authService.login(body));
+    } catch (error) {}
   }
 
   newUserPage() {

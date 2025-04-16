@@ -18,6 +18,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { HttpStatusCode } from '@angular/common/http';
 
 @Component({
   selector: 'app-new-user',
@@ -38,6 +39,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
   providers: [provideNativeDateAdapter()],
 })
 export class NewUserComponent {
+  response: HttpStatusCode | undefined;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -52,7 +54,7 @@ export class NewUserComponent {
     telephone: [],
   });
 
-  newUser() {
+  async newUser() {
     const body: User = {
       name: this.formNewUser.get('name')?.value,
       email: this.formNewUser.get('email')?.value,
@@ -60,8 +62,12 @@ export class NewUserComponent {
       birthDay: this.formNewUser.get('birthDay')?.value,
       telephone: this.formNewUser.get('telephone')?.value,
     };
-    const response = this.authService.create(body);
-    console.log(response);
+    this.response = await this.authService.create(body);
+    if (this.response == 201) {
+      this.router.navigate(['']);
+    }
+  }
+  voltar() {
     this.router.navigate(['']);
   }
 }

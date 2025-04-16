@@ -21,6 +21,7 @@ import {
 } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
 import { EditUserModalComponent } from './components/edit-user-modal/edit-user-modal.component';
+import { UserService } from '../shared/services/user.service';
 
 @Component({
   selector: 'app-show',
@@ -55,7 +56,8 @@ export class ShowComponent {
     private authService: AuthService,
     private router: Router,
     private accessService: AccessService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
@@ -64,20 +66,16 @@ export class ShowComponent {
 
   async showUser() {
     try {
-      const response: any = await this.authService.show();
+      const response: any = await this.userService.show();
       this.users = response;
       this.loading = false;
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   }
 
   async doUser(user?: User) {
     const dialog = await this.dialog.open(EditUserModalComponent, {
       data: user ? user : null,
     });
-    console.log(user);
-    console.log(this.editUserId);
     dialog.afterClosed().subscribe((result) => {
       if (result) {
         this.showUser();
@@ -87,11 +85,9 @@ export class ShowComponent {
 
   async deleteUser(id: string) {
     try {
-      await this.authService.delete(id!);
+      await this.userService.delete(id!);
       this.showUser();
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   }
 
   formNewUser: FormGroup<any> = this.fb.group({

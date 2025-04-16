@@ -9,8 +9,16 @@ main {
   h1 {
     font-size: 2.5rem;
     color: #1a237e;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
     font-weight: bold;
+  }
+
+  #resposta {
+    background-color: rgba(240, 128, 128, 0.65);
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border-radius: 10px;
+    margin-bottom: 0.2rem;
   }
 
   form {

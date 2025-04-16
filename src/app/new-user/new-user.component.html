@@ -1,6 +1,6 @@
 <main>
   <h1>New User</h1>
-
+  <span *ngIf="response" id="resposta">{{ response }}</span>
   <form [formGroup]="formNewUser" (ngSubmit)="newUser()">
     <mat-form-field>
       <mat-label>Name</mat-label>
@@ -71,6 +71,8 @@
     >
       Register New User
     </button>
-    <button mat-flat-button class="userButton" id="back">Back To Login</button>
+    <button mat-flat-button class="userButton" id="back" (click)="voltar()">
+      Back To Login
+    </button>
   </form>
 </main>

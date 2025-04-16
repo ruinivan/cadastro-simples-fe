@@ -1,3 +1,4 @@
+import { UserService } from './../../../shared/services/user.service';
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import {
@@ -47,6 +48,7 @@ export class EditUserModalComponent {
     private fb: FormBuilder,
     private router: Router,
     private authService: AuthService,
+    private userService: UserService,
     private dialogRef: MatDialogRef<EditUserModalComponent>
   ) {}
 
@@ -82,7 +84,7 @@ export class EditUserModalComponent {
       telephone: this.formUser.get('telephone')?.value,
     };
     if (this.editUser) {
-      this.authService.update(this.user._id, body);
+      this.userService.update(this.user._id, body);
     } else {
       const response = this.authService.create(body);
     }

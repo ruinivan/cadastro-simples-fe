@@ -1,45 +1,51 @@
-import { HttpClient } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpResponse,
+  HttpStatusCode,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { User } from '../interfaces/user.interface';
+import { AccessService } from './access.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   url = 'http://localhost:3000/user/';
-
-  constructor(private httpClient: HttpClient) {}
+  response: HttpResponse<object> | undefined;
+  constructor(
+    private httpClient: HttpClient,
+    private accessService: AccessService,
+    private router: Router
+  ) {}
 
   async login(body: { email: string; password: string }) {
-    return await lastValueFrom(this.httpClient.post(this.url + 'login', body));
+    this.response = await lastValueFrom(
+      this.httpClient.post(this.url + 'login', body, { observe: 'response' })
+    );
+    if (this.response.status === 200) {
+      this.accessService.allowAccess();
+      //this.router.navigate(['/show-users']);
+      return this.response;
+    } else {
+      return this.response;
+    }
   }
 
   async create(body: User) {
     try {
-      const retorno = await lastValueFrom(
+      const response = await lastValueFrom(
         this.httpClient.post(this.url, body, { observe: 'response' })
       );
-      return retorno;
+      if (response.status === 201) return response.status;
+      else return;
     } catch (error) {
-      console.log(error);
-      return;
+      if (error instanceof HttpErrorResponse) {
+        return error.error?.message;
+      } else return;
     }
-  }
-
-  async show() {
-    return await lastValueFrom(this.httpClient.get(this.url));
-  }
-
-  async search(id: string) {
-    return await lastValueFrom(this.httpClient.get(this.url + id));
-  }
-
-  async update(id: string, body: User) {
-    return await lastValueFrom(this.httpClient.patch(this.url + id, body));
-  }
-
-  async delete(id: string) {
-    return await lastValueFrom(this.httpClient.delete(this.url + id));
   }
 }
