@@ -36,7 +36,8 @@ import { HttpResponse, HttpStatusCode } from '@angular/common/http';
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
-  response: HttpResponse<object> | undefined;
+  response: string | undefined;
+
   formLogin: FormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required],
@@ -64,7 +65,7 @@ export class LoginComponent {
       password: this.password.value,
     };
     try {
-      console.log(await this.authService.login(body));
+      this.response = await this.authService.login(body);
     } catch (error) {}
   }
 

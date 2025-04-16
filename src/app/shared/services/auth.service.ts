@@ -23,15 +23,18 @@ export class AuthService {
   ) {}
 
   async login(body: { email: string; password: string }) {
+    console.log(body);
     this.response = await lastValueFrom(
       this.httpClient.post(this.url + 'login', body, { observe: 'response' })
     );
+    console.log(this.response);
     if (this.response.status === 200) {
       this.accessService.allowAccess();
       //this.router.navigate(['/show-users']);
-      return this.response;
+      return (this.response.body as { message: string }).message;
     } else {
-      return this.response;
+      console.log(this.response);
+      return (this.response.body as { message: string }).message;
     }
   }
 
