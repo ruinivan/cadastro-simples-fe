@@ -81,7 +81,9 @@ export class ShowComponent {
       data: user ? user : null,
     });
     dialog.afterClosed().subscribe((result) => {
-      if (result) {
+      if (result.status) {
+        console.log(result.status);
+
         this.showUser();
       }
     });
