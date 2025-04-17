@@ -77,7 +77,7 @@ export class NewUserComponent {
       this.sucess = true;
       setTimeout(() => {
         this.router.navigate(['']);
-      }, 2000);
+      }, 1000);
     } else {
       this.erro = true;
       this.response = Array.isArray(response) ? response[0] : response;

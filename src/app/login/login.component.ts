@@ -75,7 +75,7 @@ export class LoginComponent {
         this.accessService.allowAccess();
         setTimeout(() => {
           this.router.navigate(['show-users']);
-        }, 2000);
+        }, 1000);
       } else {
         this.erro = true;
         this.response = 'Invalid email or password';

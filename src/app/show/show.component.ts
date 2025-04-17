@@ -22,6 +22,7 @@ import {
 import { MatTableModule } from '@angular/material/table';
 import { EditUserModalComponent } from './components/edit-user-modal/edit-user-modal.component';
 import { UserService } from '../shared/services/user.service';
+import { DeleteUserModalComponent } from './components/delete-user-modal/delete-user-modal/delete-user-modal.component';
 
 @Component({
   selector: 'app-show',
@@ -50,6 +51,9 @@ export class ShowComponent {
   loading: boolean = true;
   users: User[] = [];
   editUserId: string = '';
+  response: string | undefined;
+  sucess: boolean = false;
+  erro: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -78,16 +82,22 @@ export class ShowComponent {
     });
     dialog.afterClosed().subscribe((result) => {
       if (result) {
+        console.log(result);
         this.showUser();
       }
     });
   }
 
   async deleteUser(id: string) {
-    try {
-      await this.userService.delete(id!);
-      this.showUser();
-    } catch (error) {}
+    const dialog = await this.dialog.open(DeleteUserModalComponent, {
+      data: id,
+    });
+    dialog.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log(result);
+        this.showUser();
+      }
+    });
   }
 
   formNewUser: FormGroup<any> = this.fb.group({
