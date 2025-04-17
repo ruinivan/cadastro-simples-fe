@@ -51,7 +51,7 @@ export class ShowComponent {
   loading: boolean = true;
   users: User[] = [];
   editUserId: string = '';
-  response: string | undefined;
+  response: any;
   sucess: boolean = false;
   erro: boolean = false;
 
@@ -82,7 +82,6 @@ export class ShowComponent {
     });
     dialog.afterClosed().subscribe((result) => {
       if (result) {
-        console.log(result);
         this.showUser();
       }
     });
@@ -93,9 +92,11 @@ export class ShowComponent {
       data: id,
     });
     dialog.afterClosed().subscribe((result) => {
-      if (result) {
-        console.log(result);
+      if (result.status) {
         this.showUser();
+        this.sucess = true;
+        this.response = result.message;
+        console.log(this.response);
       }
     });
   }

@@ -1,7 +1,7 @@
 <main>
   <h1>New User</h1>
-  <span *ngIf="sucess" id="sucess" class="resposta">{{ response }}</span>
-  <span *ngIf="erro" id="error" class="resposta">{{ response }}</span>
+  <span *ngIf="sucess" id="sucess" class="resposta">{{ resposta }}</span>
+  <span *ngIf="erro" id="error" class="resposta">{{ resposta }}</span>
   <form [formGroup]="formNewUser" (ngSubmit)="newUser()">
     <mat-form-field>
       <mat-label>Name</mat-label>

@@ -39,7 +39,7 @@ import { HttpStatusCode } from '@angular/common/http';
   providers: [provideNativeDateAdapter()],
 })
 export class NewUserComponent {
-  response: string | string[] | undefined;
+  resposta: string | undefined;
   sucess: boolean = false;
   erro: boolean = false;
   constructor(
@@ -75,12 +75,13 @@ export class NewUserComponent {
     const response = await this.authService.create(body);
     if (response === 'User created sucessfully') {
       this.sucess = true;
+      this.resposta = response;
       setTimeout(() => {
         this.router.navigate(['']);
       }, 1000);
     } else {
       this.erro = true;
-      this.response = Array.isArray(response) ? response[0] : response;
+      this.resposta = response;
     }
   }
   voltar() {

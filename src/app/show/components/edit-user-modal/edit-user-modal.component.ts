@@ -86,7 +86,7 @@ export class EditUserModalComponent {
     if (this.editUser) {
       this.userService.update(this.user._id, body);
     } else {
-      const response = this.authService.create(body);
+      this.authService.create(body);
     }
     this.dialogRef.close(true);
   }

@@ -1,1 +1,9 @@
-<p>delete-user-modal works!</p>
+<div>
+  <h2 mat-dialog-title>
+    Press <strong>CONFIRM</strong> to <strong>Delete</strong>
+  </h2>
+  <button class="userButton" mat-flat-button (click)="cancel()">Cancel</button>
+  <button class="userButton" mat-flat-button (click)="deleteUser()">
+    <strong>CONFIRM</strong>
+  </button>
+</div>
